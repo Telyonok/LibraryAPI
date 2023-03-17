@@ -1,4 +1,5 @@
 ﻿using LibraryAPI.Models;
+using LibraryAPI.Repositories;
 
 namespace LibraryAPI.Services
 {
@@ -8,6 +9,8 @@ namespace LibraryAPI.Services
         Task<List<Book>> GetAllBooksAsync();
         Task<Book> GetBookAsync(int id);
         Task<Book> GetBookAsync(string isbn);
-        Task<Book> UpdateBookAsync(int id, Book book);
+        Task UpdateBookAsync(int id, Book book);
+        Task DeleteBookAsync(Book book);
+        Task DeleteBookAsync(int id);
     }
 }
