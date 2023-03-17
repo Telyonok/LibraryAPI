@@ -1,0 +1,8 @@
+*.suo
+*.user
+*.webinfo
+_ReSharper*/
+[Bb]in/
+[Oo]bj/
+
+.vscode/
