@@ -5,7 +5,6 @@ namespace LibraryAPI.Data
 {
     public class LibraryDbContext : DbContext
     {
-
         public LibraryDbContext(DbContextOptions<LibraryDbContext> options) : base(options)
         {
         }
@@ -17,6 +16,7 @@ namespace LibraryAPI.Data
             modelBuilder.Entity<Book>().Property(e => e.ISBN).IsRequired().HasMaxLength(17);
             modelBuilder.Entity<Book>().Property(e => e.Author).HasMaxLength(20);
             modelBuilder.Entity<Book>().Property(e => e.Description).HasMaxLength(200);
+            modelBuilder.Entity<Book>().HasAlternateKey(e => e.ISBN);
             base.OnModelCreating(modelBuilder);
         }
 

@@ -1,11 +1,14 @@
-﻿using LibraryAPI.Models;
+﻿using LibraryAPI.Filters;
+using LibraryAPI.Models;
 using LibraryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace LibraryAPI.Controllers
 {
     [ApiController]
     [Route("api/")]
+    [BookExceptionHandlerFilter]
     public class BookController : ControllerBase
     {
         private IBookService bookService;
@@ -16,9 +19,11 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpGet("Books/")]
-        public async Task<List<Book>> GetBooksAsync()
+        public async Task<ActionResult<List<Book>>> GetBooksAsync()
         {
             List<Book> books = await bookService.GetAllBooksAsync();
+            if (books.Count == 0)
+                return NoContent();
             return books;
         }
 
@@ -37,31 +42,31 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpPost("AddBook/")]
-        public async Task<IActionResult> AddBookAsync(Book book)
+        public async Task<IActionResult> AddBookAsync(BookRequest bookRequest)
         {
-            await bookService.AddBookAsync(book);
-            return Ok();
+            await bookService.AddBookAsync(bookRequest);
+            return Ok("Successfully added a book");
         }
 
         [HttpPut("UpdateBook/{id:int}")]
-        public async Task<IActionResult> UpdateBookAsync(int id, Book book)
+        public async Task<IActionResult> UpdateBookAsync(int id, BookRequest bookRequest)
         {
-            await bookService.UpdateBookAsync(id, book);
-            return Ok();
+            await bookService.UpdateBookAsync(id, bookRequest);
+            return Ok("Successfully updated by Id");
         }
 
         [HttpDelete("DeleteBook/{id}")]
         public async Task<IActionResult> DeleteBookByIdAsync(int id)
         {
             await bookService.DeleteBookAsync(id);
-            return Ok("Deleted by Id");
+            return Ok("Successfully deleted by Id");
         }
 
         [HttpDelete("DeleteBook/")]
-        public async Task<IActionResult> DeleteBookAsync(Book book)
+        public async Task<IActionResult> DeleteBookAsync(BookRequest bookRequest)
         {
-            await bookService.DeleteBookAsync(book);
-            return Ok();
+            await bookService.DeleteBookAsync(bookRequest);
+            return Ok("Successfully deleted by BookRequest");
         }
     }
 }

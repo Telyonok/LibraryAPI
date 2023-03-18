@@ -1,16 +1,17 @@
-﻿using LibraryAPI.Models;
+﻿using FluentValidation;
+using LibraryAPI.Models;
 using LibraryAPI.Repositories;
 
 namespace LibraryAPI.Services
 {
     public interface IBookService
     {
-        Task AddBookAsync(Book book);
+        Task AddBookAsync(BookRequest bookRequest);
         Task<List<Book>> GetAllBooksAsync();
         Task<Book> GetBookAsync(int id);
         Task<Book> GetBookAsync(string isbn);
-        Task UpdateBookAsync(int id, Book book);
-        Task DeleteBookAsync(Book book);
+        Task UpdateBookAsync(int id, BookRequest bookRequest);
+        Task DeleteBookAsync(BookRequest bookRequest);
         Task DeleteBookAsync(int id);
     }
 }
