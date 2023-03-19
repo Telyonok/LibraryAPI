@@ -1,8 +1,6 @@
-﻿using FluentValidation;
-using LibraryAPI.Models;
-using LibraryAPI.Repositories;
+﻿using Library.Domain.Models;
 
-namespace LibraryAPI.Services
+namespace Library.Domain.Abstractions
 {
     public interface IBookService
     {

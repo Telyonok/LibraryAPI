@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using LibraryAPI.Exceptions;
-using LibraryAPI.Filters;
-using LibraryAPI.Helpers;
-using LibraryAPI.Models;
-using LibraryAPI.Repositories;
+using Library.Domain.Abstractions;
+using Library.Domain.Models;
+using Library.Domain.Helpers;
+using Library.Domain.Exceptions;
 
-namespace LibraryAPI.Services
+namespace Library.BLL.Services
 {
     public class BookService : IBookService
     {
@@ -24,7 +23,7 @@ namespace LibraryAPI.Services
         {
             Task validationTask = validator.ValidateAndThrowAsync(bookRequest);
             if (await bookRepository.GetBookAsync(bookRequest.ISBN) != null)
-                throw new EntityAlreadyExistsException(string.Format(Helpers.Constants.BookWithIsbnExistsMessage, bookRequest.ISBN));
+                throw new EntityAlreadyExistsException(string.Format(Constants.BookWithIsbnExistsMessage, bookRequest.ISBN));
             var book = mapper.Map<Book>(bookRequest);
             book.BorrowTime = DateTime.Now;
             book.ReturnTime = DateTime.Now.AddDays(14);
@@ -36,7 +35,7 @@ namespace LibraryAPI.Services
         {
             Book book = await bookRepository.GetBookAsync(bookRequest.ISBN);
             if (book == null || !AreEqual(book, bookRequest))
-                throw new EntityNotFoundException(Helpers.Constants.BookNotFoundMessage);
+                throw new EntityNotFoundException(Constants.BookNotFoundMessage);
             await bookRepository.DeleteBookAsync(book);
         }
 
@@ -44,7 +43,7 @@ namespace LibraryAPI.Services
         {
             Book book = await bookRepository.GetBookAsync(id);
             if (book == null)
-                throw new EntityNotFoundException(string.Format(Helpers.Constants.BookIdNotFoundMessage, id));
+                throw new EntityNotFoundException(string.Format(Constants.BookIdNotFoundMessage, id));
             await bookRepository.DeleteBookAsync(id);
         }
 
@@ -57,7 +56,7 @@ namespace LibraryAPI.Services
         {
             var book = await bookRepository.GetBookAsync(id);
             if (book == null)
-                throw new EntityNotFoundException(string.Format(Helpers.Constants.BookIdNotFoundMessage, id));
+                throw new EntityNotFoundException(string.Format(Constants.BookIdNotFoundMessage, id));
             return book;
         }
 
@@ -65,7 +64,7 @@ namespace LibraryAPI.Services
         {
             var book = await bookRepository.GetBookAsync(isbn);
             if (book == null)
-                throw new EntityNotFoundException(string.Format(Helpers.Constants.BookIsbnNotFoundMessage, isbn));
+                throw new EntityNotFoundException(string.Format(Constants.BookIsbnNotFoundMessage, isbn));
             return book;
         }
 
@@ -74,10 +73,10 @@ namespace LibraryAPI.Services
             Task validationTask = validator.ValidateAndThrowAsync(bookRequest);
             Book book = await bookRepository.GetBookAsync(id);
             if (book == null)
-                throw new EntityNotFoundException(string.Format(Helpers.Constants.BookIdNotFoundMessage, id));
+                throw new EntityNotFoundException(string.Format(Constants.BookIdNotFoundMessage, id));
             Book bookByIsbn = await bookRepository.GetBookAsync(bookRequest.ISBN);
             if (bookByIsbn != null && bookByIsbn.Id != id)
-                throw new EntityAlreadyExistsException(string.Format(Helpers.Constants.BookWithIsbnExistsMessage, bookRequest.ISBN));
+                throw new EntityAlreadyExistsException(string.Format(Constants.BookWithIsbnExistsMessage, bookRequest.ISBN));
             await validationTask;
             var newBook = mapper.Map<Book>(bookRequest);
             newBook.BorrowTime = DateTime.Now;

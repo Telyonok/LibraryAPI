@@ -1,7 +1,7 @@
-﻿using LibraryAPI.Models;
+﻿using Library.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LibraryAPI.Data
+namespace Library.Domain.Data
 {
     public class LibraryDbContext : DbContext
     {
@@ -21,5 +21,6 @@ namespace LibraryAPI.Data
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

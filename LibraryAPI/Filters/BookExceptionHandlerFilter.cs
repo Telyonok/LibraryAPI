@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
-using LibraryAPI.Exceptions;
+using Library.Domain.Exceptions;
+using Library.Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
@@ -18,7 +19,7 @@ namespace LibraryAPI.Filters
             else if (exception is EntityAlreadyExistsException || exception is EntityNotFoundException)
                 messageBuilder.Append(exception.Message);
             else
-                messageBuilder.Append(Helpers.Constants.UnknownMessage);
+                messageBuilder.Append(Constants.UnknownMessage);
             filterContext.Result = new ObjectResult(messageBuilder.ToString())
             {
                 StatusCode = (int)HttpStatusCode.BadRequest,
@@ -28,7 +29,7 @@ namespace LibraryAPI.Filters
 
         private static void BuildValidationExceptionMessage(StringBuilder messageBuilder, ValidationException validationException)
         {
-            messageBuilder.AppendLine(Helpers.Constants.BookInvalidMessage);
+            messageBuilder.AppendLine(Constants.BookInvalidMessage);
             foreach (var error in validationException.Errors)
             {
                 messageBuilder.AppendLine(error.ErrorMessage);

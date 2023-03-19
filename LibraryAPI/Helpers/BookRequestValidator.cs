@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using LibraryAPI.Models;
+using Library.Domain.Models;
 using System.Text.RegularExpressions;
 
 namespace LibraryAPI.Helpers

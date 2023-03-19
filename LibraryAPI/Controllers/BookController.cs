@@ -1,8 +1,8 @@
-﻿using LibraryAPI.Filters;
-using LibraryAPI.Models;
-using LibraryAPI.Services;
+﻿using Library.Domain.Abstractions;
+using Library.Domain.Models;
+using LibraryAPI.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace LibraryAPI.Controllers
 {
@@ -42,6 +42,7 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpPost("AddBook/")]
+        [Authorize]
         public async Task<IActionResult> AddBookAsync(BookRequest bookRequest)
         {
             await bookService.AddBookAsync(bookRequest);
@@ -49,6 +50,7 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpPut("UpdateBook/{id:int}")]
+        [Authorize]
         public async Task<IActionResult> UpdateBookAsync(int id, BookRequest bookRequest)
         {
             await bookService.UpdateBookAsync(id, bookRequest);
@@ -56,6 +58,7 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpDelete("DeleteBook/{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteBookByIdAsync(int id)
         {
             await bookService.DeleteBookAsync(id);
@@ -63,6 +66,7 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpDelete("DeleteBook/")]
+        [Authorize]
         public async Task<IActionResult> DeleteBookAsync(BookRequest bookRequest)
         {
             await bookService.DeleteBookAsync(bookRequest);

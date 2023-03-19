@@ -1,8 +1,10 @@
-﻿using LibraryAPI.Data;
-using LibraryAPI.Models;
+﻿using Library.Domain.Abstractions;
+using Library.Domain.Data;
+using Library.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace LibraryAPI.Repositories
+namespace Library.DAL.Repositories
 {
     public class BookRepository : IBookRepository
     {

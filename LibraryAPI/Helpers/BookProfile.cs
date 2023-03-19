@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LibraryAPI.Models;
+using Library.Domain.Models;
 
 namespace LibraryAPI.Helpers
 {

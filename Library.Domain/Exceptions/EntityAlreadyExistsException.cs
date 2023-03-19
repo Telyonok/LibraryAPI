@@ -1,4 +1,4 @@
-﻿namespace LibraryAPI.Exceptions
+﻿namespace Library.Domain.Exceptions
 {
     [Serializable]
     public class EntityAlreadyExistsException : Exception

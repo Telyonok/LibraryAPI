@@ -1,6 +1,6 @@
-﻿using LibraryAPI.Models;
+﻿using Library.Domain.Models;
 
-namespace LibraryAPI.Repositories
+namespace Library.Domain.Abstractions
 {
     public interface IBookRepository
     {
