@@ -26,8 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Library.BLL\Library.BLL.csproj" />
+    <ProjectReference Include="..\Library.DAL\Library.DAL.csproj" />
     <ProjectReference Include="..\Library.Domain\Library.Domain.csproj" />
-    <ProjectReference Include="..\Library.Service\Library.BLL.csproj" />
   </ItemGroup>
 
 </Project>
