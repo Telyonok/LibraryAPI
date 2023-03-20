@@ -1,4 +1,4 @@
-﻿namespace Library.Domain.Helpers
+﻿namespace Library.Domain.Models
 {
     public class CryptoSettings
     {

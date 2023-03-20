@@ -3,7 +3,6 @@ using Library.BLL.Services;
 using Library.DAL.Repositories;
 using Library.Domain.Abstractions;
 using Library.Domain.Data;
-using Library.Domain.Helpers;
 using Library.Domain.Models;
 using LibraryAPI.Helpers;
 using LibraryAPI.Middleware;
@@ -46,11 +45,11 @@ builder.Services.AddDbContext<LibraryDbContext>(options => options.UseSqlServer(
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment())
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 app.UseMiddleware<JwtMiddleware>();
