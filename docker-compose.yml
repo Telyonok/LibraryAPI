@@ -22,4 +22,4 @@ services:
     image: mcr.microsoft.com/mssql-tools:latest
     depends_on:
       - db
-    command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S 'db,1433' -U 'sa' -P 'OpenSesame123#' -Q \"RESTORE DATABASE Library FROM DISK = '/var/opt/mssql/backups/Library.bak' WITH MOVE 'Library' TO '/var/opt/mssql/data/Library.mdf', MOVE 'Library_log' TO '/var/opt/mssql/data/Library_log.ldf';\""
+    command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S 'db,1433' -U 'sa' -P 'OpenSesame123#' -Q \"RESTORE DATABASE Library FROM DISK = '/var/opt/mssql/backups/Library.bak' WITH REPLACE, MOVE 'Library' TO '/var/opt/mssql/data/Library.mdf', MOVE 'Library_log' TO '/var/opt/mssql/data/Library_log.ldf';\""
