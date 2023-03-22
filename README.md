@@ -9,7 +9,9 @@ Steps to launch the server with docker:
 Some require logging in - use one of these values:
 - Email: vasya@mail.ru 
 - Password: 1234
+
 or
+
 - Email: anya@gmail.com
 - Password: 12345
 
