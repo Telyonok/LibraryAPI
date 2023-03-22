@@ -5,7 +5,7 @@ Steps to launch the server with docker:
 2) Open command console and inside the repository folder run "docker compose build"
 3) Then run "docker compose up"
 4) Open http://localhost:5000/swagger/index.html
-5) Try out those requests! Some require logging in - use one these values:
+5) Try out those requests! Some require logging in - use one of these values:
 - Email: vasya@mail.ru 
 - Password: 1234
 or
