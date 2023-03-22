@@ -3,6 +3,7 @@ using Library.BLL.Services;
 using Library.DAL.Repositories;
 using Library.Domain.Abstractions;
 using Library.Domain.Data;
+using Library.Domain.Helpers;
 using Library.Domain.Models;
 using LibraryAPI.Helpers;
 using LibraryAPI.Middleware;
@@ -27,8 +28,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = "localhost:7138",
-            ValidAudience = "localhost:7138",
+            ValidIssuer = "localhost:5190",
+            ValidAudience = "localhost:5190",
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(cryptoSettingsSection["JwtSigningKey"])),
             ClockSkew = TimeSpan.Zero
         };
@@ -57,4 +58,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
 app.Run();

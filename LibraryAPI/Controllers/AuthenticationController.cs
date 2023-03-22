@@ -7,7 +7,7 @@ namespace LibraryAPI.Controllers
 {
     [ApiController]
     [Route("api/")]
-    [AuthenticationExceptionHandlerFilter]
+    [UserExceptionHandlerFilter]
     public class AuthenticationController : ControllerBase
     {
         IAuthenticationService authenticationService;

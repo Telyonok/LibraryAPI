@@ -19,7 +19,7 @@ namespace LibraryAPI.Filters
             else if (exception is EntityAlreadyExistsException || exception is EntityNotFoundException)
                 messageBuilder.Append(exception.Message);
             else
-                messageBuilder.Append(Constants.UnknownMessage);
+                messageBuilder.Append(Constants.UnknownErrorMessage);
             filterContext.Result = new ObjectResult(messageBuilder.ToString())
             {
                 StatusCode = (int)HttpStatusCode.BadRequest,

@@ -40,18 +40,18 @@ namespace Library.DAL.Repositories
             using (var scope = scopeFactory.CreateScope())
             {
                 var _db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
-                var book = _db.Books.First(i => i.Id == id);
+                var book = await _db.Books.FirstAsync(i => i.Id == id);
                 _db.Books.Remove(book);
                 await _db.SaveChangesAsync();
             }
         }
 
-        public async Task<List<Book>> GetAllBooksAsync()
+        public async Task<List<Book>?> GetAllBooksAsync()
         {
             using (var scope = scopeFactory.CreateScope())
             {
                 var _db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
-                return _db.Books.AsNoTracking().ToList();
+                return await _db.Books.AsNoTracking().ToListAsync();
             }
         }
 
@@ -60,7 +60,7 @@ namespace Library.DAL.Repositories
             using (var scope = scopeFactory.CreateScope())
             {
                 var _db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
-                return _db.Books.AsNoTracking().FirstOrDefault(i => i.Id == id);
+                return await _db.Books.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Library.DAL.Repositories
             using (var scope = scopeFactory.CreateScope())
             {
                 var _db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
-                return _db.Books.AsNoTracking().FirstOrDefault(i => i.ISBN == isbn);
+                return await _db.Books.AsNoTracking().FirstOrDefaultAsync(i => i.ISBN == isbn);
             }
         }
 

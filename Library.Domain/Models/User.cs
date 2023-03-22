@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿// Disabled CS8618 because the 'Book' class is used by EntityFramework.
+#pragma warning disable CS8618
 namespace Library.Domain.Models
 {
     public class User

@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - db
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    volumes:
+      - C:\Users\life2\Desktop\LibraryAPI\Data:/var/opt/mssql/backups
+    environment:
+      SA_PASSWORD: "OpenSesame123#"
+      ACCEPT_EULA: "Y"
+  sqlcmd:
+    image: mcr.microsoft.com/mssql-tools:latest
+    depends_on:
+      - db
+    command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S 'db,1433' -U 'sa' -P 'OpenSesame123#' -Q \"RESTORE DATABASE Library FROM DISK = '/var/opt/mssql/backups/Library.bak' WITH MOVE 'Library' TO '/var/opt/mssql/data/Library.mdf', MOVE 'Library_log' TO '/var/opt/mssql/data/Library_log.ldf';\""

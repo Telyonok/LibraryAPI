@@ -45,8 +45,8 @@ namespace Library.BLL.Services
 
             var token = new JwtSecurityToken
                 (
-                issuer: "localhost:7138",
-                audience: "localhost:7138",
+                issuer: "localhost:5190",
+                audience: "localhost:5190",
                 claims: claim,
                 expires: DateTime.Now.AddMinutes(10),
                 signingCredentials: creds

@@ -2,6 +2,6 @@
 {
     public class CryptoSettings
     {
-        public string JwtSigningKey { get; set; }
+        public string JwtSigningKey { get; set; } = string.Empty;
     }
 }

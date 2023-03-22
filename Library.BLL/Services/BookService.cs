@@ -25,15 +25,13 @@ namespace Library.BLL.Services
             if (await bookRepository.GetBookAsync(bookRequest.ISBN) != null)
                 throw new EntityAlreadyExistsException(string.Format(Constants.BookWithIsbnExistsMessage, bookRequest.ISBN));
             var book = mapper.Map<Book>(bookRequest);
-            book.BorrowTime = DateTime.Now;
-            book.ReturnTime = DateTime.Now.AddDays(14);
             await validationTask;
             await bookRepository.AddBookAsync(book);
         }
 
         public async Task DeleteBookAsync(BookRequest bookRequest)
         {
-            Book book = await bookRepository.GetBookAsync(bookRequest.ISBN);
+            Book? book = await bookRepository.GetBookAsync(bookRequest.ISBN);
             if (book == null || !AreEqual(book, bookRequest))
                 throw new EntityNotFoundException(Constants.BookNotFoundMessage);
             await bookRepository.DeleteBookAsync(book);
@@ -41,13 +39,13 @@ namespace Library.BLL.Services
 
         public async Task DeleteBookAsync(int id)
         {
-            Book book = await bookRepository.GetBookAsync(id);
+            Book? book = await bookRepository.GetBookAsync(id);
             if (book == null)
                 throw new EntityNotFoundException(string.Format(Constants.BookIdNotFoundMessage, id));
             await bookRepository.DeleteBookAsync(id);
         }
 
-        public async Task<List<Book>> GetAllBooksAsync()
+        public async Task<List<Book>?> GetAllBooksAsync()
         {
             return await bookRepository.GetAllBooksAsync();
         }
@@ -71,16 +69,14 @@ namespace Library.BLL.Services
         public async Task UpdateBookAsync(int id, BookRequest bookRequest)
         {
             Task validationTask = validator.ValidateAndThrowAsync(bookRequest);
-            Book book = await bookRepository.GetBookAsync(id);
+            Book? book = await bookRepository.GetBookAsync(id);
             if (book == null)
                 throw new EntityNotFoundException(string.Format(Constants.BookIdNotFoundMessage, id));
-            Book bookByIsbn = await bookRepository.GetBookAsync(bookRequest.ISBN);
+            Book? bookByIsbn = await bookRepository.GetBookAsync(bookRequest.ISBN);
             if (bookByIsbn != null && bookByIsbn.Id != id)
                 throw new EntityAlreadyExistsException(string.Format(Constants.BookWithIsbnExistsMessage, bookRequest.ISBN));
             await validationTask;
             var newBook = mapper.Map<Book>(bookRequest);
-            newBook.BorrowTime = DateTime.Now;
-            newBook.ReturnTime = DateTime.Now.AddDays(14);
             await bookRepository.UpdateBookAsync(id, newBook);
         }
 

@@ -7,7 +7,7 @@ using Library.Domain.Helpers;
 
 namespace LibraryAPI.Filters
 {
-    public class AuthenticationExceptionHandlerFilter : ExceptionFilterAttribute, IExceptionFilter
+    public class UserExceptionHandlerFilter : ExceptionFilterAttribute, IExceptionFilter
     {
         public override void OnException(ExceptionContext filterContext)
         {
@@ -16,7 +16,7 @@ namespace LibraryAPI.Filters
             if (exception is EntityNotFoundException)
                 messageBuilder.Append(exception.Message);
             else
-                messageBuilder.Append(Constants.UnknownMessage);
+                messageBuilder.Append(Constants.UnknownErrorMessage);
             filterContext.Result = new ObjectResult(messageBuilder.ToString())
             {
                 StatusCode = (int)HttpStatusCode.BadRequest,

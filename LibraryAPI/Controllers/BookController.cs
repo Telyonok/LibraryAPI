@@ -21,8 +21,8 @@ namespace LibraryAPI.Controllers
         [HttpGet("Books/")]
         public async Task<ActionResult<List<Book>>> GetBooksAsync()
         {
-            List<Book> books = await bookService.GetAllBooksAsync();
-            if (books.Count == 0)
+            List<Book>? books = await bookService.GetAllBooksAsync();
+            if (books == null || books.Count == 0)
                 return NoContent();
             return books;
         }

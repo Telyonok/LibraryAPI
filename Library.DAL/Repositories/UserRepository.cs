@@ -25,7 +25,7 @@ namespace Library.DAL.Repositories
             using (var scope = scopeFactory.CreateScope())
             {
                 var _db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
-                return _db.Users.AsNoTracking().FirstOrDefault(x => x.Email == email);
+                return await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
             }
         }
     }
