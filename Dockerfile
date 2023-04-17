@@ -12,4 +12,4 @@ COPY --from=build /app ./
 EXPOSE 5000
 ENV ServicePort 5000
 ENV ASPNETCORE_ENVIRONMENT Docker
-ENTRYPOINT ["dotnet", "LibraryAPI.dll", "--launch-profile", "Docker"]
+ENTRYPOINT ["dotnet", "Library.Web.dll", "--launch-profile", "Docker"]
