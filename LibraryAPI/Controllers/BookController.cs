@@ -1,10 +1,11 @@
-﻿using Library.Domain.Abstractions;
-using Library.Domain.Models;
-using LibraryAPI.Filters;
+﻿using Library.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Library.BusinessLayer.Services.BookService;
+using Library.BusinessLayer.Interfaces;
+using Library.DomainLayer.Models;
 
-namespace LibraryAPI.Controllers
+namespace Library.Web.Controllers
 {
     [ApiController]
     [Route("api/")]
@@ -33,7 +34,7 @@ namespace LibraryAPI.Controllers
             Book book = await bookService.GetBookAsync(id);
             return book;
         }
-        
+
         [HttpGet("Book/{isbn}")]
         public async Task<Book> GetBookByISBNAsync(string isbn)
         {
@@ -67,9 +68,9 @@ namespace LibraryAPI.Controllers
 
         [HttpDelete("DeleteBook/")]
         [Authorize]
-        public async Task<IActionResult> DeleteBookAsync(BookRequest bookRequest)
+        public async Task<IActionResult> DeleteBookAsync(string ISBN)
         {
-            await bookService.DeleteBookAsync(bookRequest);
+            await bookService.DeleteBookAsync(ISBN);
             return Ok("Successfully deleted by BookRequest");
         }
     }

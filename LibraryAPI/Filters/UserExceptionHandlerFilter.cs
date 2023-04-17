@@ -1,11 +1,11 @@
-﻿using Library.Domain.Exceptions;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text;
-using Library.Domain.Helpers;
+using Library.DomainLayer.Helpers;
+using Library.DomainLayer.Exceptions;
 
-namespace LibraryAPI.Filters
+namespace Library.Web.Filters
 {
     public class UserExceptionHandlerFilter : ExceptionFilterAttribute, IExceptionFilter
     {

@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
-using Library.Domain.Exceptions;
-using Library.Domain.Helpers;
+using Library.DomainLayer.Exceptions;
+using Library.DomainLayer.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 using System.Text;
 
-namespace LibraryAPI.Filters
+namespace Library.Web.Filters
 {
     public class BookExceptionHandlerFilter : ExceptionFilterAttribute, IExceptionFilter
     {

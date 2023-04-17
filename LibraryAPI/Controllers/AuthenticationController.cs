@@ -1,9 +1,10 @@
-﻿using Library.Domain.Abstractions;
-using Library.Domain.Models;
-using LibraryAPI.Filters;
+﻿using Library.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Library.DomainLayer.Models;
+using Library.BusinessLayer.Interfaces;
+using Library.BusinessLayer.Services.AuthenticationService;
 
-namespace LibraryAPI.Controllers
+namespace Library.Web.Controllers
 {
     [ApiController]
     [Route("api/")]
@@ -13,7 +14,7 @@ namespace LibraryAPI.Controllers
         IAuthenticationService authenticationService;
         public AuthenticationController(IAuthenticationService authenticationService)
         {
-            this.authenticationService = authenticationService;    
+            this.authenticationService = authenticationService;
         }
 
         [HttpPost]
@@ -22,7 +23,7 @@ namespace LibraryAPI.Controllers
         {
             // Call AuthenticationService instead.
             Token token = await authenticationService.GetTokenAsync(tokenRequest);
-            Response.Cookies.Append(Library.Domain.Helpers.Constants.TokenKey, token.Value);
+            Response.Cookies.Append(DomainLayer.Helpers.Constants.TokenKey, token.Value);
             return Ok("Successfull login.");
         }
     }

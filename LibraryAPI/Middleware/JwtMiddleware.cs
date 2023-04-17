@@ -1,7 +1,6 @@
-﻿using Library.Domain.Helpers;
-using Microsoft.AspNetCore.Mvc;
+﻿using Library.DomainLayer.Helpers;
 
-namespace LibraryAPI.Middleware
+namespace Library.Web.Middleware
 {
     public class JwtMiddleware
     {
@@ -14,7 +13,7 @@ namespace LibraryAPI.Middleware
         public async Task InvokeAsync(HttpContext context)
         {
             var token = context.Request.Cookies[Constants.TokenKey];
-            if (token != null) 
+            if (token != null)
                 context.Request.Headers.Add("Authorization", $"bearer {token}");
             await _next(context);
         }
