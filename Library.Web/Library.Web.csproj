@@ -27,9 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Library.BusinessLayer\Library.BusinessLayer.csproj" />
-    <ProjectReference Include="..\Library.DataLayer\Library.DataLayer.csproj" />
-    <ProjectReference Include="..\Library.DomainLayer\Library.DomainLayer.csproj" />
+    <ProjectReference Include="..\Library.BusinessLayer\Library.Application.csproj" />
+    <ProjectReference Include="..\Library.DataLayer\Library.Infrastructure.csproj" />
+    <ProjectReference Include="..\Library.DomainLayer\Library.Domain.csproj" />
   </ItemGroup>
 
 </Project>

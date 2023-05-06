@@ -1,77 +1,85 @@
-﻿using Library.Web.Filters;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Library.BusinessLayer.Services.BookService;
-using Library.BusinessLayer.Interfaces;
-using Library.DomainLayer.Models;
+using Library.Domain.Models;
+using MediatR;
+using AutoMapper;
+using Library.Application.Books.Queries.GetBooks;
+using Library.Web.Models;
+using Library.Application.Books.Queries.GetBookById;
+using Library.Application.Books.Queries.GetBookByISBN;
+using Library.Application.Books.Commands.AddBook;
+using Library.Application.Books.Commands.UpdateBook;
+using Library.Application.Books.Commands.DeleteBookById;
+using Library.Application.Books.Commands.DeleteBookByISBN;
 
 namespace Library.Web.Controllers
 {
     [ApiController]
     [Route("api/")]
-    [BookExceptionHandlerFilter]
     public class BookController : ControllerBase
     {
-        private IBookService bookService;
-
-        public BookController(IBookService bookService)
+        private readonly ISender _mediator;
+        private readonly IMapper _mapper;
+        public BookController(IMapper mapper, ISender sender)
         {
-            this.bookService = bookService;
+            _mapper = mapper;
+            _mediator = sender;
         }
 
         [HttpGet("Books/")]
-        public async Task<ActionResult<List<Book>>> GetBooksAsync()
+        public async Task<ActionResult> GetBooksAsync()
         {
-            List<Book>? books = await bookService.GetAllBooksAsync();
-            if (books == null || books.Count == 0)
-                return NoContent();
-            return books;
+            var books = await _mediator.Send(new GetBooksQuery());
+            var booksResponse = _mapper.Map<List<BookResponse>>(books);
+            return Ok(booksResponse);
         }
 
-        [HttpGet("Book/{id:int}")]
-        public async Task<Book> GetBookByIdAsync(int id)
+        [HttpGet("Book/{id:int}", Name = "GetBookById")]
+        public async Task<ActionResult> GetBookByIdAsync(int id)
         {
-            Book book = await bookService.GetBookAsync(id);
-            return book;
+            Book book = await _mediator.Send(new GetBookByIdQuery(id));
+            var bookResponse = _mapper.Map<BookResponse>(book);
+            return Ok(bookResponse);
         }
 
         [HttpGet("Book/{isbn}")]
-        public async Task<Book> GetBookByISBNAsync(string isbn)
+        public async Task<ActionResult> GetBookByISBNAsync(string isbn)
         {
-            Book book = await bookService.GetBookAsync(isbn);
-            return book;
+            Book book = await _mediator.Send(new GetBookByISBNQuery(isbn));
+            var bookResponse = _mapper.Map<BookResponse>(book);
+            return Ok(bookResponse);
         }
 
         [HttpPost("AddBook/")]
         [Authorize]
-        public async Task<IActionResult> AddBookAsync(BookRequest bookRequest)
+        public async Task<IActionResult> AddBookAsync(AddBookCommand command)
         {
-            await bookService.AddBookAsync(bookRequest);
-            return Ok("Successfully added a book");
+            var book = await _mediator.Send(command);
+            return CreatedAtRoute("GetBookById", new { id = book.Id }, book);
         }
 
-        [HttpPut("UpdateBook/{id:int}")]
+        [HttpPut("UpdateBook/")]
         [Authorize]
-        public async Task<IActionResult> UpdateBookAsync(int id, BookRequest bookRequest)
+        public async Task<IActionResult> UpdateBookAsync(UpdateBookCommand command)
         {
-            await bookService.UpdateBookAsync(id, bookRequest);
-            return Ok("Successfully updated by Id");
+            await _mediator.Send(command);
+            return NoContent();
         }
 
-        [HttpDelete("DeleteBook/{id}")]
+        [HttpDelete("DeleteBookById/")]
         [Authorize]
-        public async Task<IActionResult> DeleteBookByIdAsync(int id)
+        public async Task<IActionResult> DeleteBookByIdAsync(DeleteBookByIdCommand command)
         {
-            await bookService.DeleteBookAsync(id);
-            return Ok("Successfully deleted by Id");
+            await _mediator.Send(command);
+            return NoContent();
         }
 
-        [HttpDelete("DeleteBook/")]
+        [HttpDelete("DeleteBookByISBN/")]
         [Authorize]
-        public async Task<IActionResult> DeleteBookAsync(string ISBN)
+        public async Task<IActionResult> DeleteBookByISBNAsync(DeleteBookByISBNCommand command)
         {
-            await bookService.DeleteBookAsync(ISBN);
-            return Ok("Successfully deleted by BookRequest");
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }

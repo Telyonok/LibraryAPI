@@ -1,4 +1,4 @@
-﻿namespace Library.DomainLayer.Helpers
+﻿namespace Library.Domain.Helpers
 {
     public class Constants
     {
@@ -8,6 +8,7 @@
         public const string BookIsbnNotFoundMessage = "No book with provided ISBN:{0} found.";
         public const string BookWithIsbnExistsMessage = "Book with provided ISBN:{0} already exists.";
         public const string BookInvalidMessage = "Invalid book parameters:";
+        public const string UserWithEmailExistsMessage = "User with provided Email:{0} already exists.";
         public const string UnknownErrorMessage = "Something went wrong";
         public const string TokenKey = "X-Access-Value";
         public const string ISBN10Pattern = @"^\d-\d{4}-\d{4}-\d$";

@@ -1,4 +1,4 @@
-﻿using Library.DomainLayer.Helpers;
+﻿using Library.Domain.Helpers;
 
 namespace Library.Web.Middleware
 {

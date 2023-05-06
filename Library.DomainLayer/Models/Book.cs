@@ -2,7 +2,7 @@
 #pragma warning disable CS8618
 
 
-namespace Library.DomainLayer.Models
+namespace Library.Domain.Models
 {
     public class Book
     {

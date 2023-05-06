@@ -1,30 +1,37 @@
-﻿using Library.Web.Filters;
-using Microsoft.AspNetCore.Mvc;
-using Library.DomainLayer.Models;
-using Library.BusinessLayer.Interfaces;
-using Library.BusinessLayer.Services.AuthenticationService;
+﻿using Microsoft.AspNetCore.Mvc;
+using Library.Domain.Helpers;
+using Library.Application.Authentication.Queries.Login;
+using MediatR;
+using Library.Application.Authentication.Commands.Signup;
 
 namespace Library.Web.Controllers
 {
     [ApiController]
     [Route("api/")]
-    [UserExceptionHandlerFilter]
     public class AuthenticationController : ControllerBase
     {
-        IAuthenticationService authenticationService;
-        public AuthenticationController(IAuthenticationService authenticationService)
+        private readonly IMediator _mediator;
+        public AuthenticationController(IMediator mediator)
         {
-            this.authenticationService = authenticationService;
+            _mediator = mediator;
         }
 
         [HttpPost]
         [Route("Login/")]
-        public async Task<IActionResult> LoginAsync(TokenRequest tokenRequest)
+        public async Task<IActionResult> LoginAsync(LoginQuery query)
         {
-            // Call AuthenticationService instead.
-            Token token = await authenticationService.GetTokenAsync(tokenRequest);
-            Response.Cookies.Append(DomainLayer.Helpers.Constants.TokenKey, token.Value);
-            return Ok("Successfull login.");
+            var result = await _mediator.Send(query);
+            Response.Cookies.Append(Constants.TokenKey, result.Token);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("Signup/")]
+        public async Task<IActionResult> SignupAsync(SignupCommand command)
+        {
+            var result = await _mediator.Send(command);
+            Response.Cookies.Append(Constants.TokenKey, result.Token);
+            return Ok(result);
         }
     }
 }

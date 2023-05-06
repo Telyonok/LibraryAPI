@@ -8,13 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.DomainLayer", "Library.DomainLayer\Library.DomainLayer.csproj", "{889F0BC0-8673-4218-ABEC-F37880D3CC27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Domain", "Library.DomainLayer\Library.Domain.csproj", "{889F0BC0-8673-4218-ABEC-F37880D3CC27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.DataLayer", "Library.DataLayer\Library.DataLayer.csproj", "{6767D4C5-8E45-48AA-8041-29796A15A6DD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.BusinessLayer", "Library.BusinessLayer\Library.BusinessLayer.csproj", "{5763988D-FCE1-47A5-982E-20C9F08B79F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Infrastructure", "Library.DataLayer\Library.Infrastructure.csproj", "{6767D4C5-8E45-48AA-8041-29796A15A6DD}"
 	ProjectSection(ProjectDependencies) = postProject
-		{6767D4C5-8E45-48AA-8041-29796A15A6DD} = {6767D4C5-8E45-48AA-8041-29796A15A6DD}
+		{5763988D-FCE1-47A5-982E-20C9F08B79F8} = {5763988D-FCE1-47A5-982E-20C9F08B79F8}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Application", "Library.BusinessLayer\Library.Application.csproj", "{5763988D-FCE1-47A5-982E-20C9F08B79F8}"
+	ProjectSection(ProjectDependencies) = postProject
 		{889F0BC0-8673-4218-ABEC-F37880D3CC27} = {889F0BC0-8673-4218-ABEC-F37880D3CC27}
 	EndProjectSection
 EndProject
