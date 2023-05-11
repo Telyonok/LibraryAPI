@@ -6,7 +6,7 @@ using MediatR;
 using Library.Domain.Helpers;
 
 namespace Library.Application.Books.Commands.AddBook;
-public class AddBookCommandHandler : IRequestHandler<AddBookCommand, Book>
+public class AddBookCommandHandler : IRequestHandler<AddBookCommand>
 {
     private readonly ILibraryDbContext _context;
     private readonly IValidator<AddBookCommand> _validator;
@@ -17,7 +17,7 @@ public class AddBookCommandHandler : IRequestHandler<AddBookCommand, Book>
         _validator = validator;
     }
 
-    public async Task<Book> Handle(AddBookCommand command, CancellationToken cancellationToken)
+    public async Task Handle(AddBookCommand command, CancellationToken cancellationToken)
     {
         _validator.ValidateAndThrow(command);
 
@@ -37,7 +37,5 @@ public class AddBookCommandHandler : IRequestHandler<AddBookCommand, Book>
 
         await _context.Books.AddAsync(book, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-
-        return book;
     }
 }

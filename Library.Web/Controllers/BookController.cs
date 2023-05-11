@@ -54,8 +54,8 @@ namespace Library.Web.Controllers
         [Authorize]
         public async Task<IActionResult> AddBookAsync(AddBookCommand command)
         {
-            var book = await _mediator.Send(command);
-            return CreatedAtRoute("GetBookById", new { id = book.Id }, book);
+            await _mediator.Send(command);
+            return NoContent();
         }
 
         [HttpPut("UpdateBook/")]
