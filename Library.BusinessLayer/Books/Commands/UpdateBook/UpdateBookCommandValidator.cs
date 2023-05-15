@@ -1,6 +1,4 @@
-﻿using FluentValidation; 
-using Library.Domain.Helpers;
-using System.Text.RegularExpressions;
+﻿using FluentValidation;
 
 namespace Library.Application.Books.Commands.UpdateBook;
 public class UpdateBookCommandValidator : AbstractValidator<UpdateBookCommand>
